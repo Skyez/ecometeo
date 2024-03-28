@@ -1,0 +1,5 @@
+django
+unidecode
+openmeteo-py
+python-dateutil
+geopy

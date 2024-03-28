@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecométéo</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-rZyoFnrdzKJvryKGis8hp+Iym7LSTujUx09GYzXpB+6ZikAa0Vxu7+JvozDLWTEZ" crossorigin="anonymous">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Ecométéo</h1>
+        <form action="" method="post">
+        <div class="search-bar">
+            {% csrf_token %}
+            <input type="text" placeholder="Entrez votre ville" name="city">
+            <button>Rechercher</button>
+        </div>
+        {% if data.temp %}
+        <div class="forecast clearfix">
+            <h2>{{city}}, {{country}}</h2>
+            <div class="forecast-column">
+                <div class="forecast-item">
+                <h4> {{data.description}} <img class="weather-icon" src={{data.image}} alt={{data.description}}></h4>
+                <div class="temperatures">
+                    <p class="temp-max">{{data.temp}}</p>
+                    <p class="temp-min">{{data.feels_like}}</p>
+                </div>
+                </div>
+            </div>
+            <div class="forecast-column">
+                <div>
+                    <p>Vent : {{data.wind}}</p> 
+                    <p>Humidité : {{data.humidity}}</p>
+                    <p>Précipitations : {{data.precipitation}}</p>
+                </div>
+            </div>
+        </div>   
+        <div class="forecast clearfix">
+            <h2>Prévisions pour demain</h2>
+            <div class="forecast-column">
+                <h3>Prévision Algorithmique</h3>
+                <div class="forecast-item">
+                    <h4> {{data.algo_forecast}} <img class="weather-icon" src={{data.algo_forecast_image}} alt={{data.algo_forecast}}></h4>
+                    <div class="temperatures">
+                        <p class="temp-max">{{data.algo_temp_max}}</p>
+                        <p class="temp-min">{{data.algo_temp_min}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="forecast-column">
+                <h3>Prévision Officielle</h3>
+                <div class="forecast-item">
+                    <h4> {{data.actual_forecast}} <img class="weather-icon" src={{data.actual_forecast_image}} alt={{data.actual_forecast}}></h4>
+                    <div class="temperatures">
+                        <p class="temp-max">{{data.actual_temp_max}}</p>
+                        <p class="temp-min">{{data.actual_temp_min}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <div id="graphContainer" class="graph-container">
+            <table class="charts-css line hide-data show-heading show-labels show-primary-axis">
+                <h2> Evolution de la météo du {{data.date}} à {{city}} </h2>
+                    <th scope="row"> {{chart.year_8}} </th>
+                    <td style="--start: {{chart.coeff_9}}; --end:{{chart.coeff_8}}"> {{chart.temp_8}} </td>
+                </tr>    
+                <tr>
+                    <th scope="row"> {{chart.year_7}} </th>
+                    <td style="--start: {{chart.coeff_8}}; --end:{{chart.coeff_7}}"> {{chart.temp_7}} </td>
+                </tr>    
+                <tr>
+                    <th scope="row"> {{chart.year_6}} </th>
+                    <td style="--start: {{chart.coeff_7}}; --end:{{chart.coeff_6}}"> {{chart.temp_6}} </td>
+                </tr>    
+                <tr>
+                    <th scope="row"> {{chart.year_5}} </th>
+                    <td style="--start: {{chart.coeff_6}}; --end:{{chart.coeff_5}}"> {{chart.temp_5}} </td>
+                </tr>    
+                <tr>
+                    <th scope="row"> {{chart.year_4}} </th>
+                    <td style="--start: {{chart.coeff_5}}; --end:{{chart.coeff_4}}"> {{chart.temp_4}} </td>
+                </tr>    
+                <tr>
+                    <th scope="row"> {{chart.year_3}} </th>
+                    <td style="--start: {{chart.coeff_4}}; --end:{{chart.coeff_3}}"> {{chart.temp_3}} </td>
+                </tr>    
+                <tr>
+                    <th scope="row"> {{chart.year_2}} </th>
+                    <td style="--start: {{chart.coeff_3}}; --end:{{chart.coeff_2}}"> {{chart.temp_2}} </td>
+                </tr>    
+                <tr>
+                    <th scope="row"> {{chart.year_1}} </th>
+                    <td style="--start: {{chart.coeff_2}}; --end:{{chart.coeff_1}}"> {{chart.temp_1}} </td>
+                </tr>    
+                <tr>
+                    <th scope="row"> {{chart.year_0}} </th>
+                    <td style="--start: {{chart.coeff_1}}; --end:{{chart.coeff_0}}"> {{chart.temp_0}} </td>
+                </tr>                  
+            </table>    
+        </div>
+        {% endif %}                            
+    </div>
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2024 Ecométéo.</p>
+        </div>
+        <div class="mascot">
+            <img src="{% static '/img/paul_png.png' %}" alt="Paul">
+        </div>
+    </footer>
+</body>
+</html>
